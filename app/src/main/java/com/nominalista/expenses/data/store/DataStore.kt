@@ -1,6 +1,7 @@
 package com.nominalista.expenses.data.store
 
 import com.nominalista.expenses.data.model.Expense
+import com.nominalista.expenses.data.model.Keyword
 import com.nominalista.expenses.data.model.Tag
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -37,4 +38,21 @@ interface DataStore {
     fun deleteTag(tag: Tag): Completable
 
     fun deleteAllTags(): Completable
+
+    // Keywords
+
+    fun observeKeywords(): Observable<List<Keyword>>
+
+    fun getKeywords(): Single<List<Keyword>>
+
+    fun observeKeyword(id: String): Observable<Keyword>
+
+    fun getKeyword(id: String): Single<Keyword>
+
+    fun insertKeyword(keyword: Keyword): Single<String>
+
+    fun updateKeyword(keyword: Keyword): Completable
+
+    fun deleteKeyword(keyword: Keyword): Completable
+
 }

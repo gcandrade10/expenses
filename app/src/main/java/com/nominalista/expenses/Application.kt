@@ -37,7 +37,8 @@ class Application : android.app.Application() {
         RoomDataStore(
             database.expenseDao(),
             database.tagDao(),
-            database.expenseTagJoinDao()
+            database.expenseTagJoinDao(),
+            database.keywordDao()
         )
     }
 

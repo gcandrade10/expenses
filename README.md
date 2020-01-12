@@ -6,6 +6,16 @@
 
 ![Screens](resources/screens.png)
 
+![Screens sms feature](resources/feature_sms.png)
+
+![Message template](resources/message.png)
+
+# Dev
+
+Create a project in [firebase](https://console.firebase.google.com/) and get the google-service.json
+
+Put it in YourProjectName/app Directory
+
 # Download
 
 App is currently available on the [Google Play](https://play.google.com/store/apps/details?id=com.nominalista.expenses), but you can also download newest APK from [releases page](https://github.com/nominalista/expenses/releases).

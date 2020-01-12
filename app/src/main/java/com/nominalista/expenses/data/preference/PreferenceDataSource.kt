@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.nominalista.expenses.R
 import com.nominalista.expenses.common.presentation.Theme
+import com.nominalista.expenses.common.presentation.SmsMode
 import com.nominalista.expenses.data.model.Currency
 import com.nominalista.expenses.home.presentation.DateRange
 
@@ -68,4 +69,18 @@ class PreferenceDataSource {
 
     private fun getThemeKey(context: Context) =
         context.getString(R.string.key_theme)
+
+    private fun getSmsModeKey(context: Context) = context.getString(R.string.key_sms_reader)
+
+    fun getSmsReader(context: Context): SmsMode {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val key = getSmsModeKey(context)
+        return preferences.getString(key, null)?.let { SmsMode.valueOf(it) } ?: SmsMode.OFF
+    }
+
+    fun setSmsReader(context: Context, smsMode: SmsMode) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val key = getSmsModeKey(context)
+        preferences.edit().putString(key, smsMode.name).apply()
+    }
 }
