@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nominalista.expenses">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -16,7 +17,8 @@
         android:theme="@style/Theme.Expenses.DayNight"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".splash.SplashActivity"
+        <activity
+            android:name=".splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,27 +26,38 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".onboarding.OnboardingActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".onboarding.OnboardingActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".home.presentation.HomeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".home.presentation.HomeActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".expensedetail.presentation.ExpenseDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".expensedetail.presentation.ExpenseDetailActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".addeditexpense.presentation.AddEditExpenseActivity"
+        <activity
+            android:name=".addeditexpense.presentation.AddEditExpenseActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <activity android:name=".settings.presentation.SettingsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".settings.presentation.SettingsActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".about.AboutActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".about.AboutActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".currencyselection.CurrencySelectionActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".currencyselection.CurrencySelectionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".settings.presentation.KeywordActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".messaging.MessagingService"
@@ -61,6 +74,18 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/expenses_blue" />
+
+        <receiver
+            android:name=".sms.SmsListener"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".sms.SmsService"
+            android:enabled="true" />
 
     </application>
 

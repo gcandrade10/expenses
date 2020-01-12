@@ -2,9 +2,9 @@ package com.nominalista.expenses.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.nominalista.expenses.Application
 import com.nominalista.expenses.data.model.Currency
 import com.nominalista.expenses.data.model.Expense
+import com.nominalista.expenses.data.model.Keyword
 import com.nominalista.expenses.data.model.Tag
 import com.nominalista.expenses.data.store.DataStore
 import com.nominalista.expenses.util.extensions.toEpochMillis
@@ -17,68 +17,68 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 class FirebaseDataStore(
-    private val auth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+        private val auth: FirebaseAuth,
+        private val firestore: FirebaseFirestore
 ) : DataStore {
 
     // Expenses
 
     override fun observeExpenses(): Observable<List<Expense>> {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Observable.error(ReferenceAccessError())
+                ?: return Observable.error(ReferenceAccessError())
 
         val listener = ReactiveQuerySnapshotEventListener(expenseCollectionReference)
 
         return Observable.create(listener)
-            .map { query -> query.mapNotNull { mapDocumentToExpense(it) } }
+                .map { query -> query.mapNotNull { mapDocumentToExpense(it) } }
     }
 
     override fun getExpenses(): Single<List<Expense>> {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Single.error(ReferenceAccessError())
+                ?: return Single.error(ReferenceAccessError())
 
         val listener = ReactiveTaskListener(expenseCollectionReference.get())
 
         return Single.create(listener)
-            .map { query -> query.mapNotNull { mapDocumentToExpense(it) } }
+                .map { query -> query.mapNotNull { mapDocumentToExpense(it) } }
     }
 
     override fun observeExpense(id: String): Observable<Expense> {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Observable.error(ReferenceAccessError())
+                ?: return Observable.error(ReferenceAccessError())
 
         val expenseDocumentReference = expenseCollectionReference.document(id)
 
         val listener = ReactiveDocumentSnapshotEventListener(expenseDocumentReference)
 
         return Observable.create(listener)
-            .map { document -> mapDocumentToExpense(document) }
+                .map { document -> mapDocumentToExpense(document) }
     }
 
     override fun getExpense(id: String): Single<Expense> {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Single.error(ReferenceAccessError())
+                ?: return Single.error(ReferenceAccessError())
 
         val expenseDocumentReference = expenseCollectionReference.document(id)
 
         val listener = ReactiveTaskListener(expenseDocumentReference.get())
 
         return Single.create(listener)
-            .map { document -> mapDocumentToExpense(document) }
+                .map { document -> mapDocumentToExpense(document) }
     }
 
     override fun insertExpense(expense: Expense): Single<String> {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Single.error(ReferenceAccessError())
+                ?: return Single.error(ReferenceAccessError())
 
         val data = hashMapOf(
-            "amount" to expense.amount,
-            "currency" to expense.currency.code,
-            "title" to expense.title,
-            "tags" to expense.tags.map { mapOf("id" to it.id, "name" to it.name) },
-            "date" to expense.date.toEpochMillis(),
-            "notes" to expense.notes,
-            "timestamp" to FieldValue.serverTimestamp()
+                "amount" to expense.amount,
+                "currency" to expense.currency.code,
+                "title" to expense.title,
+                "tags" to expense.tags.map { mapOf("id" to it.id, "name" to it.name) },
+                "date" to expense.date.toEpochMillis(),
+                "notes" to expense.notes,
+                "timestamp" to FieldValue.serverTimestamp()
         )
 
         return Single.fromCallable {
@@ -90,17 +90,17 @@ class FirebaseDataStore(
 
     override fun updateExpense(expense: Expense): Completable {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Completable.error(ReferenceAccessError())
+                ?: return Completable.error(ReferenceAccessError())
 
         val expenseDocumentReference = expenseCollectionReference.document(expense.id)
 
         val data = hashMapOf(
-            "amount" to expense.amount,
-            "currency" to expense.currency.code,
-            "title" to expense.title,
-            "tags" to expense.tags.map { mapOf("id" to it.id, "name" to it.name) },
-            "date" to expense.date.toEpochMillis(),
-            "notes" to expense.notes
+                "amount" to expense.amount,
+                "currency" to expense.currency.code,
+                "title" to expense.title,
+                "tags" to expense.tags.map { mapOf("id" to it.id, "name" to it.name) },
+                "date" to expense.date.toEpochMillis(),
+                "notes" to expense.notes
         )
 
         return Completable.fromAction { expenseDocumentReference.update(data) }
@@ -108,7 +108,7 @@ class FirebaseDataStore(
 
     override fun deleteExpense(expense: Expense): Completable {
         val expenseCollectionReference = getExpenseCollectionReference()
-            ?: return Completable.error(ReferenceAccessError())
+                ?: return Completable.error(ReferenceAccessError())
 
         val expenseDocumentReference = expenseCollectionReference.document(expense.id)
 
@@ -129,27 +129,27 @@ class FirebaseDataStore(
 
     override fun observeTags(): Observable<List<Tag>> {
         val tagCollectionReference = getTagCollectionReference()
-            ?: return Observable.error(ReferenceAccessError())
+                ?: return Observable.error(ReferenceAccessError())
 
         val listener = ReactiveQuerySnapshotEventListener(tagCollectionReference)
 
         return Observable.create(listener)
-            .map { query -> query.mapNotNull { mapDocumentToTag(it) } }
+                .map { query -> query.mapNotNull { mapDocumentToTag(it) } }
     }
 
     override fun getTags(): Single<List<Tag>> {
         val tagCollectionReference = getTagCollectionReference()
-            ?: return Single.error(ReferenceAccessError())
+                ?: return Single.error(ReferenceAccessError())
 
         val listener = ReactiveTaskListener(tagCollectionReference.get())
 
         return Single.create(listener)
-            .map { query -> query.mapNotNull { mapDocumentToTag(it) } }
+                .map { query -> query.mapNotNull { mapDocumentToTag(it) } }
     }
 
     override fun insertTag(tag: Tag): Single<String> {
         val tagCollectionReference = getTagCollectionReference()
-            ?: return Single.error(ReferenceAccessError())
+                ?: return Single.error(ReferenceAccessError())
 
         val data = hashMapOf("name" to tag.name)
 
@@ -162,7 +162,7 @@ class FirebaseDataStore(
 
     override fun deleteTag(tag: Tag): Completable {
         val tagCollectionReference = getTagCollectionReference()
-            ?: return Completable.error(ReferenceAccessError())
+                ?: return Completable.error(ReferenceAccessError())
 
         val tagDocumentReference = tagCollectionReference.document(tag.id)
 
@@ -171,6 +171,87 @@ class FirebaseDataStore(
 
     override fun deleteAllTags(): Completable {
         throw NotImplementedError("Deleting a collection in Firestore is impossible.")
+    }
+
+    // Keywords
+
+    override fun observeKeywords(): Observable<List<Keyword>> {
+        val keywordCollectionReference = getKeywordCollectionReference()
+                ?: return Observable.error(ReferenceAccessError())
+
+        val listener = ReactiveQuerySnapshotEventListener(keywordCollectionReference)
+
+        return Observable.create(listener)
+                .map { query -> query.mapNotNull { mapDocumentToKeyword(it) } }
+    }
+
+    override fun getKeywords(): Single<List<Keyword>> {
+        val keywordCollectionReference = getKeywordCollectionReference()
+                ?: return Single.error(ReferenceAccessError())
+
+        val listener = ReactiveTaskListener(keywordCollectionReference.get())
+
+        return Single.create(listener)
+                .map { query -> query.mapNotNull { mapDocumentToKeyword(it) } }
+    }
+
+    override fun observeKeyword(id: String): Observable<Keyword> {
+        val keywordCollectionReference = getKeywordCollectionReference()
+                ?: return Observable.error(ReferenceAccessError())
+
+        val keywordDocumentReference = keywordCollectionReference.document(id)
+
+        val listener = ReactiveDocumentSnapshotEventListener(keywordDocumentReference)
+
+        return Observable.create(listener)
+                .map { document -> mapDocumentToKeyword(document) }
+    }
+
+    override fun getKeyword(id: String): Single<Keyword> {
+        val keywordCollectionReference = getKeywordCollectionReference()
+                ?: return Single.error(ReferenceAccessError())
+
+        val keywordDocumentReference = keywordCollectionReference.document(id)
+
+        val listener = ReactiveTaskListener(keywordDocumentReference.get())
+
+        return Single.create(listener)
+                .map { document -> mapDocumentToKeyword(document) }
+    }
+
+    override fun insertKeyword(keyword: Keyword): Single<String> {
+        val keywordCollectionReference = getKeywordCollectionReference()
+                ?: return Single.error(ReferenceAccessError())
+
+        val data = hashMapOf("name" to keyword.name)
+
+        return Single.fromCallable {
+            val document = keywordCollectionReference.document()
+            document.set(data)
+            document.id
+        }
+    }
+
+    override fun updateKeyword(keyword: Keyword): Completable {
+        val keywordCollectionReference = getKeywordCollectionReference() ?: return Completable.error(ReferenceAccessError())
+
+        val keywordDocumentReference = keywordCollectionReference.document(keyword.id)
+
+        val data = hashMapOf("name" to keyword.name,
+                "firstSymbol" to keyword.firstSymbol,
+                "lastSymbol" to keyword.lastSymbol,
+                "decimalSeparator" to keyword.decimalSeparator,
+                "groupSeparator" to keyword.groupSeparator)
+        return Completable.fromAction { keywordDocumentReference.update(data as Map<String, Any>) }
+    }
+
+    override fun deleteKeyword(keyword: Keyword): Completable {
+        val keywordCollectionReference = getKeywordCollectionReference()
+                ?: return Completable.error(ReferenceAccessError())
+
+        val tagDocumentReference = keywordCollectionReference.document(keyword.id)
+
+        return Completable.fromAction { tagDocumentReference.delete() }
     }
 
     // Helpers
@@ -183,6 +264,10 @@ class FirebaseDataStore(
         return getUserDataReference()?.collection("tags")
     }
 
+    private fun getKeywordCollectionReference(): CollectionReference? {
+        return getUserDataReference()?.collection("keywords")
+    }
+
     private fun getUserDataReference(): DocumentReference? {
         return auth.currentUser?.uid?.let { firestore.collection("user-data").document(it) }
     }
@@ -190,36 +275,36 @@ class FirebaseDataStore(
     @Suppress("UNCHECKED_CAST")
     private fun mapDocumentToExpense(document: DocumentSnapshot): Expense? {
         val amount = document.getDouble("amount")
-            ?: return null
+                ?: return null
 
         val currency = document.getString("currency")?.let { Currency.fromCode(it) }
-            ?: return null
+                ?: return null
 
         val title = document.getString("title")
-            ?: return null
+                ?: return null
 
         val tags = (document.get("tags") as? List<Any>)
-            ?.mapNotNull { it as? Map<Any, Any> }
-            ?.mapNotNull { mapMapToTag(it) }
-            ?: return null
+                ?.mapNotNull { it as? Map<Any, Any> }
+                ?.mapNotNull { mapMapToTag(it) }
+                ?: return null
 
         val date = document.getLong("date")?.toLocalDate()
-            ?: return null
+                ?: return null
 
         val notes = document.getString("notes")
-            ?: return null
+                ?: return null
 
         val timestamp = document.getTimestamp("timestamp")?.toDate()?.time
 
         return Expense(
-            document.id,
-            amount,
-            currency,
-            title,
-            tags,
-            date,
-            notes,
-            timestamp
+                document.id,
+                amount,
+                currency,
+                title,
+                tags,
+                date,
+                notes,
+                timestamp
         )
     }
 
@@ -232,6 +317,15 @@ class FirebaseDataStore(
     private fun mapDocumentToTag(document: DocumentSnapshot): Tag? {
         val name = document.getString("name") ?: return null
         return Tag(document.id, name)
+    }
+
+    private fun mapDocumentToKeyword(document: DocumentSnapshot): Keyword? {
+        val name = document.getString("name") ?: return null
+        val firstSymbol = document.getString("firstSymbol") ?: return null
+        val lastSymbol = document.getString("lastSymbol") ?: return null
+        val decimalSeparator = document.getString("decimalSeparator") ?: return null
+        val groupSeparator = document.getString("groupSeparator") ?: return null
+        return Keyword(document.id, name, firstSymbol, lastSymbol, decimalSeparator, groupSeparator)
     }
 
     class ReferenceAccessError : Error("Cannot access reference.")

@@ -9,19 +9,24 @@ import com.nominalista.expenses.Application
 import com.nominalista.expenses.BuildConfig
 import com.nominalista.expenses.R
 import com.nominalista.expenses.authentication.AuthenticationManager
+import com.nominalista.expenses.common.presentation.SmsMode
 import com.nominalista.expenses.common.presentation.Theme
 import com.nominalista.expenses.data.model.Currency
 import com.nominalista.expenses.data.preference.PreferenceDataSource
+import com.nominalista.expenses.data.store.DataStore
 import com.nominalista.expenses.util.reactive.DataEvent
 import com.nominalista.expenses.util.reactive.Event
 import com.nominalista.expenses.util.reactive.Variable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class SettingsFragmentModel(
-    application: Application,
-    private val preferenceDataSource: PreferenceDataSource,
-    private val authenticationManager: AuthenticationManager
+        application: Application,
+        private val preferenceDataSource: PreferenceDataSource,
+        private val authenticationManager: AuthenticationManager,
+        private val dataStore: DataStore
 ) : AndroidViewModel(application) {
+    val requestPermission = Event()
     val itemModels = Variable(emptyList<SettingItemModel>())
     val selectDefaultCurrency = Event()
     val navigateToOnboarding = Event()
@@ -29,6 +34,8 @@ class SettingsFragmentModel(
     val showActivity = DataEvent<Uri>()
     val showThemeSelectionDialog = DataEvent<Theme>()
     val applyTheme = DataEvent<Theme>()
+    val showSmsModeSelectionDialog = DataEvent<SmsMode>()
+    val manageKeywords = Event()
 
     private val disposables = CompositeDisposable()
 
@@ -38,7 +45,7 @@ class SettingsFragmentModel(
         loadItemModels()
     }
 
-    private fun loadItemModels() {
+    fun loadItemModels() {
         itemModels.value =
             createAccountSection() + createApplicationSection() + createPrivacySection()
     }
@@ -60,7 +67,7 @@ class SettingsFragmentModel(
     }
 
     private fun createAccountHeader(context: Context): SettingItemModel =
-        SettingsHeaderModel(context.getString(R.string.account))
+            SettingsHeaderModel(context.getString(R.string.account))
 
     private fun createSignOut(context: Context): SettingItemModel {
         val title = context.getString(R.string.sign_out)
@@ -94,22 +101,27 @@ class SettingsFragmentModel(
         itemModels += createApplicationHeader(context)
         itemModels += createDefaultCurrency(context)
         itemModels += createDarkMode(context)
+        itemModels += createSmsReader(context)
+        val smsReader = preferenceDataSource.getSmsReader(context)
+        if(smsReader==SmsMode.ON){
+            itemModels += createKeywords(context)
+        }
 
         return itemModels
     }
 
     private fun createApplicationHeader(context: Context): SettingItemModel =
-        SettingsHeaderModel(context.getString(R.string.application))
+            SettingsHeaderModel(context.getString(R.string.application))
 
     private fun createDefaultCurrency(context: Context): SettingItemModel {
         val defaultCurrency = preferenceDataSource.getDefaultCurrency(context)
 
         val title = context.getString(R.string.default_currency)
         val summary = context.getString(
-            R.string.default_currency_summary,
-            defaultCurrency.flag,
-            defaultCurrency.title,
-            defaultCurrency.code
+                R.string.default_currency_summary,
+                defaultCurrency.flag,
+                defaultCurrency.title,
+                defaultCurrency.code
         )
 
         return SummaryActionSettingItemModel(title, summary).apply {
@@ -130,6 +142,39 @@ class SettingsFragmentModel(
 
         return SummaryActionSettingItemModel(title, summary).apply {
             click = { showThemeSelectionDialog.next(darkMode) }
+        }
+    }
+
+    private fun createSmsReader(context: Context): SettingItemModel {
+        val title = context.getString(R.string.sms_reader)
+
+        val smsReader = preferenceDataSource.getSmsReader(context)
+
+        val summary = when (smsReader) {
+            SmsMode.ON -> context.getString(R.string.on)
+            SmsMode.OFF -> context.getString(R.string.off)
+        }
+
+        return SummaryActionSettingItemModel(title, summary).apply {
+            click = { showSmsModeSelectionDialog.next(smsReader) }
+        }
+    }
+
+    private fun createKeywords(context: Context): SettingItemModel {
+
+        val title = context.getString(R.string.sms_reader_keywords)
+        dataStore.getKeywords()
+
+        val keywords = dataStore.getKeywords()
+                .subscribeOn(Schedulers.io())
+                .blockingGet()
+
+        val summary = when {
+            keywords.isEmpty() -> context.getString(R.string.sms_reader_keywords_placeholder)
+            else -> keywords.map { it.name }.reduce { acc, next -> "$acc, $next" }
+        }
+        return SummaryActionSettingItemModel(title, summary).apply {
+            click = { manageKeywords.next() }
         }
     }
 
@@ -182,14 +227,27 @@ class SettingsFragmentModel(
         applyTheme.next(theme)
     }
 
+    fun smsModeSelected(smsMode: SmsMode) {
+        getApplication<Application>().let {
+            preferenceDataSource.setSmsReader(it, smsMode)
+        }
+        loadItemModels()
+
+        if (smsMode == SmsMode.ON) {
+            requestPermission.next()
+        }
+    }
+
+
     @Suppress("UNCHECKED_CAST")
     class Factory(private val application: Application) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return SettingsFragmentModel(
-                application,
-                application.preferenceDataSource,
-                application.authenticationManager
+                    application,
+                    application.preferenceDataSource,
+                    application.authenticationManager,
+                    application.localDataStore
             ) as T
         }
     }

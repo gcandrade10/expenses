@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "9fb186aa1692baed01bfebfe06da0cee",
+    "version": 4,
+    "identityHash": "82cf70cbd0295ff659b1a020f4c2620b",
     "entities": [
       {
         "tableName": "expenses",
@@ -161,7 +161,7 @@
       },
       {
         "tableName": "keywords",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `firstSymbol` TEXT NOT NULL, `lastSymbol` TEXT NOT NULL, `decimalSeparator` TEXT NOT NULL, `groupSeparator` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -172,6 +172,30 @@
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstSymbol",
+            "columnName": "firstSymbol",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSymbol",
+            "columnName": "lastSymbol",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decimalSeparator",
+            "columnName": "decimalSeparator",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groupSeparator",
+            "columnName": "groupSeparator",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -189,7 +213,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9fb186aa1692baed01bfebfe06da0cee')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '82cf70cbd0295ff659b1a020f4c2620b')"
     ]
   }
 }
