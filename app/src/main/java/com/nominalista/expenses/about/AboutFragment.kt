@@ -15,10 +15,7 @@ import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.SkuDetails
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nominalista.expenses.R
-import com.nominalista.expenses.util.extensions.getSupportActionBarOrNull
-import com.nominalista.expenses.util.extensions.plusAssign
-import com.nominalista.expenses.util.extensions.requireApplication
-import com.nominalista.expenses.util.extensions.startActivitySafely
+import com.nominalista.expenses.util.extensions.*
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_about.*
 
@@ -142,9 +139,5 @@ class AboutFragment : Fragment() {
     private fun backSelected(): Boolean {
         requireActivity().onBackPressed()
         return true
-    }
-
-    companion object {
-        private const val TAG = "AboutFragment"
     }
 }

@@ -11,6 +11,7 @@ import com.nominalista.expenses.data.model.Currency
 import com.nominalista.expenses.data.model.Expense
 import com.nominalista.expenses.data.model.Tag
 import com.nominalista.expenses.data.store.DataStore
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.toLocalDate
 import jxl.DateCell
 import jxl.NumberCell
@@ -179,9 +180,6 @@ class ExpenseImportWorker(context: Context, params: WorkerParameters) :
     }
 
     companion object {
-
-        private const val TAG = "ExpenseImportWorker"
-
         private const val KEY_FILE_URI = "fileUri"
 
         private const val INVALID_COLUMN = -1

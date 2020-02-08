@@ -5,6 +5,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.nominalista.expenses.BuildConfig
 import com.nominalista.expenses.R
+import com.nominalista.expenses.util.extensions.TAG
 
 class FirebaseConfiguration(
     private val remoteConfig: FirebaseRemoteConfig
@@ -38,8 +39,6 @@ class FirebaseConfiguration(
     override fun getString(key: String) = remoteConfig.getString(key)
 
     companion object {
-        private const val TAG = "FirebaseConfiguration"
-
         private val MINIMUM_FETCH_INTERVAL_SECONDS = if (BuildConfig.DEBUG) 60L else 3600L
     }
 }

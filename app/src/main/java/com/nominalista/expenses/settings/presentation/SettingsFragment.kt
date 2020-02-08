@@ -24,7 +24,7 @@ import com.nominalista.expenses.common.presentation.SmsMode
 import com.nominalista.expenses.currencyselection.CurrencySelectionActivity
 import com.nominalista.expenses.data.model.Currency
 import com.nominalista.expenses.onboarding.OnboardingActivity
-import com.nominalista.expenses.settings.presentation.SmsModeSelectionDialogFragment.Companion.TAG
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.application
 import com.nominalista.expenses.util.extensions.plusAssign
 import com.nominalista.expenses.util.extensions.startActivitySafely

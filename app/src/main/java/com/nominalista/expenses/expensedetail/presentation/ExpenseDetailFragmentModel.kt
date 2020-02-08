@@ -12,6 +12,7 @@ import com.nominalista.expenses.data.model.Tag
 import com.nominalista.expenses.expensedetail.domain.DeleteExpenseUseCase
 import com.nominalista.expenses.expensedetail.domain.ObserveExpenseUseCase
 import com.nominalista.expenses.util.READABLE_DATE_FORMAT
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.plusAssign
 import com.nominalista.expenses.util.extensions.toMoneyString
 import com.nominalista.expenses.util.extensions.toString
@@ -115,9 +116,5 @@ class ExpenseDetailFragmentModel(
                 expense
             ) as T
         }
-    }
-
-    companion object {
-        private const val TAG = "ExpenseDetailFragmentModel"
     }
 }

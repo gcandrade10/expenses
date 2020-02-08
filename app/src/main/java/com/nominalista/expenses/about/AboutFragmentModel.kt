@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.billingclient.api.*
 import com.nominalista.expenses.Application
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.reactive.DataEvent
 import com.nominalista.expenses.util.reactive.Event
 
@@ -141,7 +142,6 @@ class AboutFragmentModel(application: Application) : AndroidViewModel(applicatio
     }
 
     companion object {
-        private const val TAG = "AboutFragmentModel"
         private const val PRODUCT_ID_TIP = "tip"
         private val EMAIL_URI = Uri.parse("mailto:the.nominalista@gmail.com")
         private val GOOGLE_PLAY_URI =

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.nominalista.expenses.R
+import com.nominalista.expenses.util.extensions.TAG
 import kotlin.random.Random
 
 class MessagingService : FirebaseMessagingService() {
@@ -61,9 +62,6 @@ class MessagingService : FirebaseMessagingService() {
     private fun generateNotificationId() = Random.nextInt(1, 100)
 
     companion object {
-
-        private const val TAG = "MessagingService"
-
         private const val CHANNEL_ID = "Expenses"
     }
 }

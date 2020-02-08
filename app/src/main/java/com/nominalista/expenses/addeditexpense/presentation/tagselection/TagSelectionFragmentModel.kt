@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.nominalista.expenses.Application
 import com.nominalista.expenses.data.model.Tag
 import com.nominalista.expenses.data.store.DataStore
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.plusAssign
 import com.nominalista.expenses.util.reactive.DataEvent
 import com.nominalista.expenses.util.reactive.Event
@@ -120,9 +121,5 @@ class TagSelectionFragmentModel(private val dataStore: DataStore) : ViewModel() 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return TagSelectionFragmentModel(application.defaultDataStore) as T
         }
-    }
-
-    companion object {
-        private val TAG = TagSelectionFragmentModel::class.java.simpleName
     }
 }

@@ -52,10 +52,7 @@ class SmsModeSelectionDialogFragment : DialogFragment(), DialogInterface.OnClick
     }
 
     companion object {
-        const val TAG = "ThemeSelectionDialogFragment"
-
-        private const val ARGUMENT_CURRENT_SMS_MODE =
-            "com.nominalista.expenses.ARGUMENT_CURRENT_SMS_MODE"
+        private const val ARGUMENT_CURRENT_SMS_MODE = "com.nominalista.expenses.ARGUMENT_CURRENT_SMS_MODE"
 
         fun newInstance(currentSmsMode: SmsMode): SmsModeSelectionDialogFragment {
             val arguments = Bundle().apply {

@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.nominalista.expenses.Application
 import com.nominalista.expenses.R
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.reactive.ReactiveTaskListener
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -91,9 +92,5 @@ class AuthenticationManager(
             val signOutFromGoogle = googleSignInClient.signOut()
             Completable.create(ReactiveTaskListener(signOutFromGoogle))
         }
-    }
-
-    companion object {
-        private const val TAG = "AuthenticationManager"
     }
 }

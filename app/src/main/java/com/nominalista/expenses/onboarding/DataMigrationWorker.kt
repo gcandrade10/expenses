@@ -12,6 +12,7 @@ import com.nominalista.expenses.data.model.Tag
 import com.nominalista.expenses.data.store.DataStore
 import com.nominalista.expenses.data.firebase.FirebaseDataStore
 import com.nominalista.expenses.data.room.RoomDataStore
+import com.nominalista.expenses.util.extensions.TAG
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers.io
 import kotlinx.coroutines.coroutineScope
@@ -108,9 +109,6 @@ class DataMigrationWorker(context: Context, params: WorkerParameters) :
     }
 
     companion object {
-
-        private const val TAG = "DataMigrationWorker"
-
         fun enqueue(context: Context): UUID {
             val request = OneTimeWorkRequest.Builder(DataMigrationWorker::class.java).build()
 

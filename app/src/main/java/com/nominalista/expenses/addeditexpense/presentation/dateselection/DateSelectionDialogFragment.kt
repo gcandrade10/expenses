@@ -29,9 +29,6 @@ class DateSelectionDialogFragment : DialogFragment(), DatePickerDialog.OnDateSet
     }
 
     companion object {
-
-        const val TAG = "DateSelectionDialogFragment"
-
         fun newInstance() = DateSelectionDialogFragment()
     }
 }

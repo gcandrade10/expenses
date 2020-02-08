@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.nominalista.expenses.Application
 import com.nominalista.expenses.authentication.AuthenticationManager
 import com.nominalista.expenses.data.preference.PreferenceDataSource
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.plusAssign
 import com.nominalista.expenses.util.reactive.DataEvent
 import com.nominalista.expenses.util.reactive.Event
@@ -73,9 +74,5 @@ class OnboardingFragmentModel(
                 application.preferenceDataSource
             ) as T
         }
-    }
-
-    companion object {
-        private const val TAG = "OnboardingFragmentModel"
     }
 }

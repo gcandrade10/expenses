@@ -10,6 +10,7 @@ import com.nominalista.expenses.data.model.Expense
 import com.nominalista.expenses.data.model.Tag
 import com.nominalista.expenses.data.preference.PreferenceDataSource
 import com.nominalista.expenses.data.store.DataStore
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.plusAssign
 import com.nominalista.expenses.util.reactive.Event
 import com.nominalista.expenses.util.reactive.Variable
@@ -174,9 +175,5 @@ class AddEditExpenseFragmentModel(
                 expense
             ) as T
         }
-    }
-
-    companion object {
-        private val TAG = AddEditExpenseFragmentModel::class.java.simpleName
     }
 }

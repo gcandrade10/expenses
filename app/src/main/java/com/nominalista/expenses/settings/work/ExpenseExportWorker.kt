@@ -13,6 +13,7 @@ import com.nominalista.expenses.Application
 import com.nominalista.expenses.R
 import com.nominalista.expenses.data.model.Expense
 import com.nominalista.expenses.data.store.DataStore
+import com.nominalista.expenses.util.extensions.TAG
 import com.nominalista.expenses.util.extensions.toDate
 import jxl.Workbook
 import jxl.write.*
@@ -132,9 +133,6 @@ class ExpenseExportWorker(context: Context, workerParams: WorkerParameters) :
     }
 
     companion object {
-
-        private const val TAG = "ExpenseExportWorker"
-
         private const val TIMESTAMP_PATTERN = "yyyyMMdd_HHmmss"
 
         private const val DATE_PATTERN = "yyyy-MM-dd"

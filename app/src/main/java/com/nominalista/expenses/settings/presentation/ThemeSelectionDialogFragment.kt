@@ -53,8 +53,6 @@ class ThemeSelectionDialogFragment : DialogFragment(), DialogInterface.OnClickLi
     }
 
     companion object {
-        const val TAG = "ThemeSelectionDialogFragment"
-
         private const val ARGUMENT_CURRENT_THEME =
             "com.nominalista.expenses.ARGUMENT_CURRENT_THEME"
 
