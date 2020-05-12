@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="expenses_blue">#4388E9</color>
-    <color name="expenses_blue_dark">#3E76D5</color>
-    <color name="expenses_red">#E44343</color>
+    <color name="expenses_blue">#02182b</color>
+    <color name="expenses_blue_dark">#004e64</color>
+    <color name="expenses_red">#e15554</color>
 
     <color name="background_light">#FFFFFF</color>
     <color name="background_light_2dp">#F0F0F0</color> <!-- 6% black on background light -->
