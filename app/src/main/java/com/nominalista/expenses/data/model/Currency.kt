@@ -8,10 +8,11 @@ import java.util.*
 
 @Parcelize
 enum class Currency(
-    val title: String,
-    val symbol: String,
-    val flag: String,
-    val locale: Locale? = null
+        val title: String,
+        val symbol: String,
+        val flag: String,
+        val locale: Locale? = null,
+        val defaultDecimals: Int = 2
 ) : Parcelable {
 
     AED("Emirati Dirham", "د.إ", "\uD83C\uDDE6\uD83C\uDDEA"),
@@ -42,7 +43,7 @@ enum class Currency(
     CHF("Switzerland Franc", "CHF", "\uD83C\uDDE8\uD83C\uDDED"),
     CLP("Chile Peso", "$", "\uD83C\uDDE8\uD83C\uDDF1"),
     CNY("China Yuan", "¥", "\uD83C\uDDE8\uD83C\uDDF3"),
-    COP("Colombia Peso", "$", "\uD83C\uDDE8\uD83C\uDDF4", Locale("es", "CO")),
+    COP("Colombia Peso", "$", "\uD83C\uDDE8\uD83C\uDDF4", Locale("es", "CO"), 0),
     CRC("Costa Rica Colon", "₡", "\uD83C\uDDE8\uD83C\uDDF7"),
     CUP("Cuban Peso", "$", "\uD83C\uDDE8\uD83C\uDDFA"),
     CVE("Cape Verdean Escudo", "$", "\uD83C\uDDE8\uD83C\uDDFB"),
