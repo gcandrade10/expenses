@@ -7,6 +7,8 @@
     <style name="Theme.Expenses" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Colors -->
         <item name="colorPrimary">@color/expenses_blue</item>
+        <item name="moneyTextColor">@color/expenses_blue</item>
+        moneyTextColor
         <item name="colorOnPrimary">#FFFFFF</item>
 
         <item name="colorPrimaryVariant">@color/expenses_blue_dark</item>

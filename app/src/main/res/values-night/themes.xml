@@ -7,6 +7,8 @@
     <style name="Theme.Expenses.Dark" parent="Theme.Expenses">
         <!-- Colors -->
         <item name="colorPrimary">@color/expenses_blue</item>
+        <item name="moneyTextColor">@color/color_on_primary_emphasis_high</item>
+
         <item name="colorOnPrimary">#FFFFFF</item>
 
         <item name="colorPrimaryVariant">@color/expenses_blue_dark</item>

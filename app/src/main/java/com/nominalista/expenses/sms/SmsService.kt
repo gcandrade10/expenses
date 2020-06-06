@@ -24,14 +24,14 @@ class SmsService : IntentService("com.nominalista.expenses.sms.SmsService") {
         }
     }
 
-    override fun onHandleIntent(intent: Intent) {
-        intent.extras?.let {
+    override fun onHandleIntent(intent: Intent?) {
+        intent?.extras?.let {
             val messageBody: String = it["EXTRA"] as String
             message = messageBody
             val rule = getRule(applicationContext, messageBody)
             val defaultCurrency = applicationContext.application.preferenceDataSource.getDefaultCurrency(applicationContext.application)
             val localDataStore = applicationContext.application.localDataStore
-            compositeDisposable += insertExpense(localDataStore, AndroidSchedulers.mainThread(), Schedulers.io(), defaultCurrency,rule, messageBody)
+            compositeDisposable += insertExpense(localDataStore, AndroidSchedulers.mainThread(), Schedulers.io(), defaultCurrency, rule, messageBody)
         }
     }
 
@@ -43,7 +43,6 @@ class SmsService : IntentService("com.nominalista.expenses.sms.SmsService") {
                 .blockingGet()
         return rules.first { it.keywords.map { keyword -> message.contains(keyword, ignoreCase = true) }.fold(false) { acc, next -> acc || next } }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

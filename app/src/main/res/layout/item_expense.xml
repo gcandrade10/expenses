@@ -41,7 +41,7 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:textAppearance="?textAppearanceHeadline5"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?moneyTextColor"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

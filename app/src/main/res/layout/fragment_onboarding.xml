@@ -29,7 +29,7 @@
         android:id="@+id/imageLogo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/img_logo"
+        android:src="@drawable/img_logo_with_shadow"
         app:layout_constraintBottom_toTopOf="@id/guidelineCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_xlarge"
         android:layout_marginEnd="@dimen/spacing_xlarge"
@@ -52,11 +52,10 @@
 
     <TextView
         android:id="@+id/textSubtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xlarge"
+        android:layout_marginHorizontal="@dimen/spacing_xlarge"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_xlarge"
         android:text="@string/simple_budget_tracker"
         android:textColor="@color/text_secondary_light"
         android:textSize="16sp"

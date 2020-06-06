@@ -4,4 +4,5 @@
     <attr name="emphasisMediumAlpha" format="float"/>
     <attr name="emphasisLowAlpha" format="float"/>
     <attr name="emphasisDividerAlpha" format="float"/>
+    <attr name="moneyTextColor" format="reference" />
 </resources>

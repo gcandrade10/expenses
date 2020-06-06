@@ -15,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="?textAppearanceHeadline4"
-        android:textColor="?colorPrimary"
+        android:textColor="?moneyTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"

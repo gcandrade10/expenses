@@ -96,7 +96,7 @@ class AddRuleFragment : Fragment() {
 
     private fun populateDropdownMenu(formats: List<Format>) {
         val formatsArray = formats.map { it.hint }
-        val adapter: ArrayAdapter<String> = ArrayAdapter(context, R.layout.dropdown_menu_popup_item, formatsArray)
+        val adapter: ArrayAdapter<String> = ArrayAdapter(context!!, R.layout.dropdown_menu_popup_item, formatsArray)
         formatDropdownMenu.setOnClickListener { hideKeyboard() }
         formatDropdownMenu.setAdapter(adapter)
         formatDropdownMenu.keyListener = null
